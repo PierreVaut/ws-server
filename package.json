@@ -4,7 +4,7 @@
     "lerna": "^4.0.0"
   },
   "scripts": {
-    "start": "lerna run build && node packages/server",
+    "start": "node packages/server",
     "dev": "nodemon packages/server"
   }
 }
