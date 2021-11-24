@@ -9,7 +9,8 @@
 /coverage
 
 # production
-/build
+# Sorry github but the raspberry pi zero has a hard time building the app, so I commit the build...!
+#/build
 
 # misc
 .DS_Store
