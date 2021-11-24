@@ -1,38 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState, useEffect, useRef} from 'react';
 import './App.css';
 
 
 
 
-
 function App() {
-  const socket = new WebSocket('ws://localhost:8080');
-  socket.addEventListener('open', function (event) {
-    socket.send('Hello Server!');
-});
 
-// Listen for messages
-socket.addEventListener('message', function (event) {
-    console.log('Message from server ', event.data);
-});
+  const [messages, setMessages] = useState<Array<string>>([])
+
+  const socket = useRef<WebSocket | null>(null)
+
+  const [open, setOpen] = useState(false)
+
+  const sendGreet = () => {
+    if(socket.current) {
+      const greet = "Greetings from client !"
+      socket.current.send(greet)
+      setMessages(prev => [...prev, greet]);
+    }
+  }
+
+  useEffect(() => {
+    console.log("useEffect !")
+
+    socket.current = new WebSocket('ws://localhost:8080');
+    socket.current.onmessage = (message) => {
+        setMessages(prev => [...prev, message.data]);
+    };
+    socket.current.onopen = (() => {
+      if(socket.current) {
+        setOpen(true)
+        console.log("Open !")
+      }
+    })
+
+    return () => {if(socket.current) { socket.current.close() }};
+}, []);
+
+  console.log(open)
 
 
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <button onClick={sendGreet} disabled={!open}>
+          Greet the server !
+        </button>
+        {messages.map((message)=> <p>{message}</p>)}
       </header>
     </div>
   );
