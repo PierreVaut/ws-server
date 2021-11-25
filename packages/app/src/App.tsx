@@ -23,7 +23,7 @@ function App() {
   useEffect(() => {
     console.log("useEffect !")
 
-    socket.current = new WebSocket('ws://localhost:8080');
+    socket.current = new WebSocket(`ws://${window.location.hostname}:8080`);
     socket.current.onmessage = (message) => {
         setMessages(prev => [...prev, message.data]);
     };
