@@ -2,7 +2,7 @@ import express from 'express';
 import ws_server from './ws/ws_server.js';
 
 const app = express();
-const port = 5000;
+const port = 3000;
 
 app.use(express.static('packages/app/build'));
 
