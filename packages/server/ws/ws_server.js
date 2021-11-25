@@ -4,7 +4,7 @@ const ws_server = () => {
   const wss = new WebSocketServer({ port: 8080, clientTracking: true });
   console.log("wss start !")
 
-  wss.on('connection', function connection(ws, req, client) {
+  wss.on('connection', function connection(ws, request) {
 
     ws.on('message', function message(data, isBinary) {
       console.log("message :" + data)
@@ -12,7 +12,7 @@ const ws_server = () => {
         ws.send("Hello from server !")
       } else{
         wss.clients.forEach(function each(client) {
-          console.log("client - " + client)
+          console.log("client - " + JSON.stringify(client))
           if (client !== ws && client.readyState === WebSocket.OPEN) {
             client.send(data, { binary: isBinary });
           }

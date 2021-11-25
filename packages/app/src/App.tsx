@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 
 
@@ -14,7 +14,7 @@ function App() {
   const [message, setMessage] = useState("")
 
   const sendGreet = () => {
-    if(socket.current) {
+    if (socket.current) {
       const greet = "Greetings from client !"
       socket.current.send(greet)
       setMessages(prev => [...prev, greet]);
@@ -22,7 +22,7 @@ function App() {
   }
 
   const sendMessage = () => {
-    if(socket.current) {
+    if (socket.current) {
       socket.current.send(message)
       setMessages(prev => [...prev, message]);
       setMessage("")
@@ -32,17 +32,17 @@ function App() {
   useEffect(() => {
     socket.current = new WebSocket(`ws://${window.location.hostname}:8080`);
     socket.current.onmessage = (message) => {
-        setMessages(prev => [...prev, message.data]);
+      setMessages(prev => [...prev, message.data]);
     };
     socket.current.onopen = (() => {
-      if(socket.current) {
+      if (socket.current) {
         setOpen(true)
         console.log("Open !")
       }
     })
 
-    return () => {if(socket.current) { socket.current.close() }};
-}, []);
+    return () => { if (socket.current) { socket.current.close() } };
+  }, []);
 
   console.log(open)
 
@@ -54,13 +54,13 @@ function App() {
           Greet the server !
         </button>
 
-          Your message:
-          <input type="text" value={message} onChange={event => setMessage(event.target.value)} />
-          <button onClick={sendMessage} disabled={!open}>Send !</button>
+        Your message:
+        <input type="text" value={message} onChange={event => setMessage(event.target.value)} />
+        <button onClick={sendMessage} disabled={!open}>Send !</button>
 
 
 
-        {messages.map((message)=> <p>{message}</p>)}
+        {messages.map((message) => <p>{message}</p>)}
       </header>
     </div>
   );

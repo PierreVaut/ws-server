@@ -6,13 +6,12 @@ const port = 3000;
 
 app.use(express.static('packages/app/build'));
 
-app.get('/', function (req, res) {
+app.get('/', (req, res) => {
   res.sendFile('packages/app/build', 'index.html');
 });
 
-console.log("running on port " + port)
+console.log(`running on port ${port}`);
 
-ws_server()
+ws_server();
 
 app.listen(port);
-
