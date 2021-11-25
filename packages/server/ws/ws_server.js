@@ -5,12 +5,19 @@ const ws_server = () => {
   console.log("wss start !")
 
   wss.on('connection', function connection(ws, req, client) {
-    console.log("connection - " + client)
 
     ws.on('message', function message(data, isBinary) {
       console.log("message :" + data)
       if(data.includes("greet")){
         ws.send("Hello from server")
+      } else{
+        wss.clients.forEach(function each(client) {
+          console.log("client - " + client)
+          if (client !== ws && client.readyState === WebSocket.OPEN) {
+            client.send(data, { binary: isBinary });
+          }
+        });
+
       }
 
     });
