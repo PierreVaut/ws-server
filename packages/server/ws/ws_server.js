@@ -8,8 +8,8 @@ const ws_server = () => {
 
     ws.on('message', function message(data, isBinary) {
       console.log("message :" + data)
-      if(data.includes("greet")){
-        ws.send("Hello from server")
+      if((""+ data).toLowerCase().includes("greet")){
+        ws.send("Hello from server !")
       } else{
         wss.clients.forEach(function each(client) {
           console.log("client - " + client)
