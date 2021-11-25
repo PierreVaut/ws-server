@@ -11,6 +11,7 @@ function App() {
   const socket = useRef<WebSocket | null>(null)
 
   const [open, setOpen] = useState(false)
+  const [message, setMessage] = useState("")
 
   const sendGreet = () => {
     if(socket.current) {
@@ -20,9 +21,15 @@ function App() {
     }
   }
 
-  useEffect(() => {
-    console.log( window.location.hostname)
+  const sendMessage = () => {
+    if(socket.current) {
+      socket.current.send(message)
+      setMessages(prev => [...prev, message]);
+      setMessage("")
+    }
+  }
 
+  useEffect(() => {
     socket.current = new WebSocket(`ws://${window.location.hostname}:8080`);
     socket.current.onmessage = (message) => {
         setMessages(prev => [...prev, message.data]);
@@ -46,6 +53,13 @@ function App() {
         <button onClick={sendGreet} disabled={!open}>
           Greet the server !
         </button>
+
+          Your message:
+          <input type="text" value={message} onChange={event => setMessage(event.target.value)} />
+          <button onClick={sendMessage} disabled={!open}>Send !</button>
+
+
+
         {messages.map((message)=> <p>{message}</p>)}
       </header>
     </div>

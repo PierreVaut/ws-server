@@ -9,7 +9,9 @@ const ws_server = () => {
 
     ws.on('message', function message(data, isBinary) {
       console.log("message :" + data)
-      ws.send("Hello from server")
+      if(data.includes("greet")){
+        ws.send("Hello from server")
+      }
 
     });
   });
