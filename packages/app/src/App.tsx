@@ -21,7 +21,7 @@ function App() {
   }
 
   useEffect(() => {
-    console.log("useEffect !")
+    console.log( window.location.hostname)
 
     socket.current = new WebSocket(`ws://${window.location.hostname}:8080`);
     socket.current.onmessage = (message) => {
