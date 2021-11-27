@@ -11,7 +11,6 @@ const ws_server = () => {
         ws.send('Hello from server !');
       } else {
         wss.clients.forEach((client) => {
-          console.log(`client - ${JSON.stringify(client)}`);
           if (client !== ws && client.readyState === WebSocket.OPEN) {
             client.send(data, { binary: isBinary });
           }
