@@ -1,69 +1,90 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './App.css';
+import { useCookies } from 'react-cookie';
+import Login from './Login';
 
+import { IMessage, createMessage } from '../../utils/src/message';
 
+const App = function () {
+  const [messagesLocalHistory, setMessagesLocalHistory] = useState<IMessage[]>([]);
+  console.log('salut!');
+  const socket = useRef<WebSocket | null>(null);
 
-
-function App() {
-
-  const [messages, setMessages] = useState<Array<string>>([])
-
-  const socket = useRef<WebSocket | null>(null)
-
-  const [open, setOpen] = useState(false)
-  const [message, setMessage] = useState("")
+  const [open, setOpen] = useState(false);
+  const [currentMessage, setCurrentMessage] = useState('');
+  const [cookie] = useCookies();
+  const userName = cookie?.name;
 
   const sendGreet = () => {
     if (socket.current) {
-      const greet = "Greetings from client !"
-      socket.current.send(greet)
-      setMessages(prev => [...prev, greet]);
+      const greet = createMessage('Greetings from client !', userName);
+      socket.current.send(JSON.stringify(greet));
+      setMessagesLocalHistory((prev) => [...prev, greet]);
     }
-  }
+  };
 
   const sendMessage = () => {
     if (socket.current) {
-      socket.current.send(message)
-      setMessages(prev => [...prev, message]);
-      setMessage("")
+      const message = createMessage(currentMessage, userName);
+      socket.current.send(JSON.stringify(message));
+      setMessagesLocalHistory((prev) => [...prev, message]);
+      setCurrentMessage('');
     }
-  }
+  };
 
   useEffect(() => {
     socket.current = new WebSocket(`ws://${window.location.hostname}:8080`);
-    socket.current.onmessage = (message) => {
-      setMessages(prev => [...prev, message.data]);
+    socket.current.onmessage = (receivedMessage) => {
+      setMessagesLocalHistory((prev) => [...prev, receivedMessage.data]);
     };
     socket.current.onopen = (() => {
       if (socket.current) {
-        setOpen(true)
-        console.log("Open !")
+        setOpen(true);
+        console.log('Open !');
       }
-    })
+    });
 
-    return () => { if (socket.current) { socket.current.close() } };
+    return () => { if (socket.current) { socket.current.close(); } };
   }, []);
 
-  console.log(open)
-
+  console.log(open);
 
   return (
     <div className="App">
-      <header className="App-header">
-        <button onClick={sendGreet} disabled={!open}>
-          Greet the server !
-        </button>
+      {
+        userName
 
-        Your message:
-        <input type="text" value={message} onChange={event => setMessage(event.target.value)} />
-        <button onClick={sendMessage} disabled={!open}>Send !</button>
+          ? (
+            <div>
 
+              <button onClick={sendGreet}>
+                Greet the server!
+              </button>
 
+              Your message:
+              <input type="text" value={currentMessage} onChange={(event) => setCurrentMessage(event.target.value)} />
+              <button onClick={sendMessage} disabled={!open}> Send! </button>
 
-        {messages.map((message) => <p>{message}</p>)}
-      </header>
+              {
+                messagesLocalHistory.map((message) => (
+                  <p>
+                    {
+                      new Date(message.date).toLocaleTimeString()
+                    }
+                    {' '}
+                    :
+                    {message.userName}
+                    {' '}
+                    -
+                    {message.message}
+                  </p>
+                ))
+              }
+            </div>
+          )
+          : <Login />
+      }
     </div>
   );
-}
+};
 
 export default App;
