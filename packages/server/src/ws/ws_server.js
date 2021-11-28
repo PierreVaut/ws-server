@@ -9,7 +9,7 @@ const ws_server = () => {
     ws.on('message', (data, isBinary) => {
       console.log(`message :${data}`);
       if ((`${data}`).toLowerCase().includes('greet')) {
-        ws.send(createMessage('Hello from server !', 'server'));
+        ws.send(JSON.stringify(createMessage('Hello from server !', 'server')));
       } else {
         wss.clients.forEach((client) => {
           if (client !== ws && client.readyState === WebSocket.OPEN) {

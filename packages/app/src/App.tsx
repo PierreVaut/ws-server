@@ -33,7 +33,8 @@ const App = function () {
   useEffect(() => {
     socket.current = new WebSocket(`ws://${window.location.hostname}:8080`);
     socket.current.onmessage = (receivedMessage) => {
-      setMessagesLocalHistory((prev) => [...prev, receivedMessage.data]);
+      console.log(receivedMessage.data)
+      setMessagesLocalHistory((prev) => [...prev, JSON.parse(receivedMessage.data)]);
     };
     socket.current.onopen = (() => {
       if (socket.current) {
