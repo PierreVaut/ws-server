@@ -1,6 +1,6 @@
 {
   "name": "@ws-server/app",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "> TODO: description",
   "author": "pierrevaut <p.vautherin@hotmail.com>",
   "homepage": "https://github.com/PierreVaut/ws-server#readme",
@@ -36,7 +36,7 @@
     "webpack-dev-server": "^4.6.0"
   },
   "dependencies": {
-    "@ws-server/utils": "^1.0.0",
+    "@ws-server/utils": "^1.0.1",
     "react": "^17.0.2",
     "react-cookie": "^4.1.1",
     "react-dom": "^17.0.2"
