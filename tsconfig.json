@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": "packages",
+    "sourceMap": true,
     "paths": {
-      "@utils/*": [
-        "packages/utils/src/**/*"
+      "@ws-server/utils": [
+        "utils/src/*"
       ]
     }
   },

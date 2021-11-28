@@ -19,7 +19,15 @@ module.exports = {
   plugins: [
     'react',
     '@typescript-eslint',
+    'plugin:import/typescript',
   ],
   rules: {
+  },
+  settings: {
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      },
+    },
   },
 };

@@ -6,7 +6,6 @@ import { IMessage, createMessage } from '../../utils/src/message';
 
 const App = function () {
   const [messagesLocalHistory, setMessagesLocalHistory] = useState<IMessage[]>([]);
-  console.log('salut!');
   const socket = useRef<WebSocket | null>(null);
 
   const [open, setOpen] = useState(false);
@@ -45,8 +44,6 @@ const App = function () {
 
     return () => { if (socket.current) { socket.current.close(); } };
   }, []);
-
-  console.log(open);
 
   return (
     <div className="App">

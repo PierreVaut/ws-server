@@ -1,4 +1,5 @@
 import WebSocket, { WebSocketServer } from 'ws';
+import { createMessage } from '@ws-server/utils';
 
 const ws_server = () => {
   const wss = new WebSocketServer({ port: 8080, clientTracking: true });
@@ -8,7 +9,7 @@ const ws_server = () => {
     ws.on('message', (data, isBinary) => {
       console.log(`message :${data}`);
       if ((`${data}`).toLowerCase().includes('greet')) {
-        ws.send('Hello from server !');
+        ws.send(createMessage('Hello from server !', 'server'));
       } else {
         wss.clients.forEach((client) => {
           if (client !== ws && client.readyState === WebSocket.OPEN) {
