@@ -11,6 +11,5 @@
   "devDependencies": {
     "typescript": "^4.1.2"
   },
-  "dependencies": {},
   "gitHead": "d348ef39c72c5acc0afc9e2fb29b4d7ca8f2ddd9"
 }
