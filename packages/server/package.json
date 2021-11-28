@@ -10,8 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@ws-server/app": "*",
-    "@ws-server/utils": "*",
+    "@ws-server/app": "^1.0.0",
+    "@ws-server/utils": "^1.0.0",
     "express": "^4.17.1",
     "ws": "^8.3.0"
   },
