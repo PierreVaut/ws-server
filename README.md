@@ -1,6 +1,6 @@
 # ws-server
 
-deployed on raspberry pi: (http://192.168.0.14/)[http://192.168.0.14/]
+deployed on raspberry pi: [http://192.168.0.14/](http://192.168.0.14/)
 
 # Notes
 
