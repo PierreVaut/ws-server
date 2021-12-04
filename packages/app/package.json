@@ -1,22 +1,11 @@
 {
   "name": "@ws-server/app",
-  "version": "1.0.1",
-  "description": "> TODO: description",
+  "version": "1.0.0",
+  "description": "A chat app using websocket",
   "author": "pierrevaut <p.vautherin@hotmail.com>",
   "homepage": "https://github.com/PierreVaut/ws-server#readme",
   "license": "ISC",
   "main": "lib/app.js",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
-  },
-  "files": [
-    "lib"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/PierreVaut/ws-server.git"
-  },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1",
     "start": "webpack-dev-server --mode development --open --hot",
@@ -36,7 +25,7 @@
     "webpack-dev-server": "^4.6.0"
   },
   "dependencies": {
-    "@ws-server/utils": "^1.0.1",
+    "@ws-server/utils": "^1.0.0",
     "react": "^17.0.2",
     "react-cookie": "^4.1.1",
     "react-dom": "^17.0.2"

@@ -1,12 +1,9 @@
 {
   "name": "@ws-server/ws-server",
-  "workspaces": {
-    "packages": [
-      "packages/server/*",
-      "packages/app/*",
-      "packages/utils/*"
-    ]
-  },
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
@@ -16,16 +13,15 @@
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.27.1",
     "eslint-plugin-react-hooks": "^4.3.0",
-    "lerna": "^4.0.0",
     "typescript": "^4.5.2"
   },
   "scripts": {
     "start": "node packages/server/dist/index.js",
     "dev": "nodemon packages/server/dist",
-    "bootstrap": "lerna bootstrap",
-    "clean": "lerna run --parallel clean"
+    "build": "yarn workspace build"
   },
   "dependencies": {
     "tsconfig-paths": "^3.12.0"
-  }
+  },
+  "packageManager": "yarn@3.1.1"
 }
