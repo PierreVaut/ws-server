@@ -2,16 +2,20 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useCookies } from 'react-cookie';
 import Login from './Login';
 
-import { IMessage, createMessage } from '../../utils/src/message';
+import { IMessage, createMessage, loginKey } from '../../utils/src/message';
+
+export type TSocket = WebSocket | null
+
 
 const App = function () {
   const [messagesLocalHistory, setMessagesLocalHistory] = useState<IMessage[]>([]);
-  const socket = useRef<WebSocket | null>(null);
+  const socket = useRef<TSocket>(null);
 
   const [open, setOpen] = useState(false);
   const [currentMessage, setCurrentMessage] = useState('');
   const [cookie] = useCookies();
   const userName = cookie?.name;
+  const [loginStatus, setLoginStatus] = useState(false)
 
   const sendGreet = () => {
     if (socket.current) {
@@ -33,8 +37,16 @@ const App = function () {
   useEffect(() => {
     socket.current = new WebSocket(`ws://${window.location.hostname}:8080`);
     socket.current.onmessage = (receivedMessage) => {
-      console.log(receivedMessage.data)
-      setMessagesLocalHistory((prev) => [...prev, JSON.parse(receivedMessage.data)]);
+      const parsedMessage = JSON.parse(receivedMessage.data)
+      const { message, loginStatus } = parsedMessage
+      console.log(parsedMessage)
+      if (message === loginKey && loginStatus) {
+        console.log("You're logged in !!")
+        setLoginStatus(true)
+      }
+      else {
+        setMessagesLocalHistory((prev) => [...prev, parsedMessage]);
+      }
     };
     socket.current.onopen = (() => {
       if (socket.current) {
@@ -49,7 +61,7 @@ const App = function () {
   return (
     <div className="App">
       {
-        userName
+        userName && loginStatus
 
           ? (
             <div>
@@ -64,7 +76,7 @@ const App = function () {
 
               {
                 messagesLocalHistory.map((message) => (
-                  <p>
+                  <p key={message.date}>
                     {
                       new Date(message.date).toLocaleTimeString()
                     }
@@ -79,7 +91,7 @@ const App = function () {
               }
             </div>
           )
-          : <Login />
+          : <Login open={open} currentSocket={socket.current} />
       }
     </div>
   );

@@ -1,5 +1,5 @@
 import WebSocket, { WebSocketServer } from 'ws';
-import { createMessage } from '@ws-server/utils';
+import { createMessage, loginKey, validLoginResponse } from '@ws-server/utils';
 
 const ws_server = () => {
   const wss = new WebSocketServer({ port: 8080, clientTracking: true });
@@ -7,10 +7,18 @@ const ws_server = () => {
 
   wss.on('connection', (ws) => {
     ws.on('message', (data, isBinary) => {
-      console.log(`message :${data}`);
-      if ((`${data}`).toLowerCase().includes('greet')) {
+      const { message, userName } = JSON.parse(data)
+      console.log(`message :${message} - ${userName}`);
+      console.log(createMessage, loginKey, message === loginKey);
+
+      if ((message).toLowerCase().includes('greet')) {
         ws.send(JSON.stringify(createMessage('Hello from server !', 'server')));
-      } else {
+      }
+      else if (message == loginKey) {
+        console.log("login from  " + userName)
+        ws.send(JSON.stringify(validLoginResponse()));
+      }
+      else {
         wss.clients.forEach((client) => {
           if (client !== ws && client.readyState === WebSocket.OPEN) {
             client.send(data, { binary: isBinary });
