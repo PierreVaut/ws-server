@@ -24,9 +24,15 @@ dist
 node_modules/
 jspm_packages/
 
-# Optional npm cache directory
-.npm
-.yarn/cache
+# Yarn stuff
+# https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
+.yarn/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
 
 # Optional eslint cache
 .eslintcache
