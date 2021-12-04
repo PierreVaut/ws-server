@@ -10,19 +10,14 @@ const Login = ({ open, currentSocket }: { open: boolean, currentSocket: TSocket 
   const [_, setCookie] = useCookies();
 
   const setUsername = () => {
-    console.log(name)
     setCookie("name", name)
     if (open && currentSocket) {
       currentSocket.send(JSON.stringify(loginMessage(name)))
     }
-
   }
-
 
   return <div>
     <h2> Please login</h2>
-
-
     Enter your name:
     <input type="text" value={name} onChange={event => setName(event.target.value)} />
     <button onClick={setUsername} disabled={name === ''}>Go !</button>

@@ -39,7 +39,6 @@ const App = function () {
     socket.current.onmessage = (receivedMessage) => {
       const parsedMessage = JSON.parse(receivedMessage.data)
       const { message, loginStatus } = parsedMessage
-      console.log(parsedMessage)
       if (message === loginKey && loginStatus) {
         console.log("You're logged in !!")
         setLoginStatus(true)

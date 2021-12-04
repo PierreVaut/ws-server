@@ -8,8 +8,6 @@ const ws_server = () => {
   wss.on('connection', (ws) => {
     ws.on('message', (data, isBinary) => {
       const { message, userName } = JSON.parse(data)
-      console.log(`message :${message} - ${userName}`);
-      console.log(createMessage, loginKey, message === loginKey);
 
       if ((message).toLowerCase().includes('greet')) {
         ws.send(JSON.stringify(createMessage('Hello from server !', 'server')));
