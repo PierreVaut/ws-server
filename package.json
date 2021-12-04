@@ -20,10 +20,10 @@
   "scripts": {
     "clean": "yarn workspaces foreach run clean",
     "build": "yarn clean && yarn workspaces foreach run build",
-    "start": "yarn build && node packages/server/dist/index.js",
+    "start": "yarn && yarn build && node packages/server/dist/index.js",
     "dev:server": "yarn workspace @ws-server/server run dev",
     "dev:app": "yarn workspace @ws-server/app run dev",
-    "dev": "concurrently \"run dev:server\" \"run dev:app\"",
+    "dev": "concurrently \"run dev:server\" \"run dev:app\""
   },
   "packageManager": "yarn@3.1.1"
 }
