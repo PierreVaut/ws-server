@@ -743,7 +743,7 @@ __metadata:
     eslint-plugin-jsx-a11y: ^6.5.1
     eslint-plugin-react: ^7.27.1
     eslint-plugin-react-hooks: ^4.3.0
-    tsconfig-paths: ^3.12.0
+    rimraf: ^3.0.2
     typescript: ^4.5.2
   languageName: unknown
   linkType: soft
@@ -5849,7 +5849,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsconfig-paths@npm:^3.11.0, tsconfig-paths@npm:^3.12.0":
+"tsconfig-paths@npm:^3.11.0":
   version: 3.12.0
   resolution: "tsconfig-paths@npm:3.12.0"
   dependencies:

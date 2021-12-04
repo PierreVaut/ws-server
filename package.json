@@ -14,17 +14,16 @@
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.27.1",
     "eslint-plugin-react-hooks": "^4.3.0",
+    "rimraf": "^3.0.2",
     "typescript": "^4.5.2"
   },
   "scripts": {
-    "start": "node packages/server/dist/index.js",
-    "build": "yarn workspace foreach run build",
+    "clean": "yarn workspaces foreach run clean",
+    "build": "yarn clean && yarn workspaces foreach run build",
+    "start": "yarn build && node packages/server/dist/index.js",
     "dev:server": "yarn workspace @ws-server/server run dev",
     "dev:app": "yarn workspace @ws-server/app run dev",
-    "dev": "concurrently \"run dev:server\" \"run dev:app\""
-  },
-  "dependencies": {
-    "tsconfig-paths": "^3.12.0"
+    "dev": "concurrently \"run dev:server\" \"run dev:app\"",
   },
   "packageManager": "yarn@3.1.1"
 }

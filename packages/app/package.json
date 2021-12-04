@@ -9,7 +9,8 @@
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1",
     "dev": "webpack-dev-server --mode development --open --hot --port 5000",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "clean": "rimraf ./dist"
   },
   "bugs": {
     "url": "https://github.com/PierreVaut/ws-server/issues"
