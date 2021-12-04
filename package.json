@@ -1,5 +1,5 @@
 {
-  "name": "@ws-server/ws-server",
+  "name": "@ws-server/root",
   "private": true,
   "workspaces": [
     "packages/*"
@@ -7,6 +7,7 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
+    "concurrently": "^6.4.0",
     "eslint": "^7.11.0",
     "eslint-config-airbnb": "^19.0.1",
     "eslint-plugin-import": "^2.25.3",
@@ -17,8 +18,10 @@
   },
   "scripts": {
     "start": "node packages/server/dist/index.js",
-    "dev": "nodemon packages/server/dist",
-    "build": "yarn workspace build"
+    "build": "yarn workspace foreach run build",
+    "dev:server": "yarn workspace @ws-server/server run dev",
+    "dev:app": "yarn workspace @ws-server/app run dev",
+    "dev": "concurrently \"run dev:server\" \"run dev:app\""
   },
   "dependencies": {
     "tsconfig-paths": "^3.12.0"
